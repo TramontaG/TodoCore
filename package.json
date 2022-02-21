@@ -1,0 +1,13 @@
+{
+  "name": "TodoCore",
+  "version": "1.0.0",
+  "description": "all the rules for a Todo App",
+  "main": "/dist/index.js",
+  "repository": "git@github.com:TramontaG/TodoCore.git",
+  "author": "TramontaG",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "typescript": "^4.5.5"
+  }
+}
