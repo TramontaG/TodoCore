@@ -1,5 +1,5 @@
 {
-	"name": "TodoCore",
+	"name": "todo-core",
 	"version": "1.0.0",
 	"description": "all the rules for a Todo App",
 	"main": "/dist/index.js",
