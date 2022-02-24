@@ -46,8 +46,9 @@ var ReactAdapter = /** @class */ (function (_super) {
     function ReactAdapter(init) {
         var _this = _super.call(this) || this;
         _this.useState = init.useState;
-        _this.useEffect = init.useEffect;
+        // this.useEffect = init.useEffect;
         _this.states = {};
+        _this.reactions = [];
         return _this;
     }
     ReactAdapter.prototype.createState = function (stateName, initialState) {
@@ -61,9 +62,16 @@ var ReactAdapter = /** @class */ (function (_super) {
     ReactAdapter.prototype.updateState = function (stateName, newState) {
         var updateFn = this.states[stateName][1];
         updateFn(newState);
+        this.reactions.forEach(function (reaction) {
+            if (reaction.condition())
+                reaction.callback();
+        });
     };
-    ReactAdapter.prototype.when = function (condition, cb) {
-        this.useEffect(cb, [condition]);
+    ReactAdapter.prototype.when = function (condition, callback) {
+        this.reactions.push({
+            condition: function () { return condition; },
+            callback: callback,
+        });
     };
     return ReactAdapter;
 }(GenericAdapter));

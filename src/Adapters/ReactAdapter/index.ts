@@ -13,16 +13,23 @@ type StateMap = {
 	[key: string]: [any, (p: UpdateStateFnParams<any>) => void];
 };
 
+type Reaction = {
+	condition: () => boolean;
+	callback: () => void;
+};
+
 class ReactAdapter extends GenericAdapter implements Adapter {
-	useState: typeof React.useState;
-	useEffect: typeof React.useEffect;
-	states: StateMap;
+	private useState: typeof React.useState;
+	// private useEffect: typeof React.useEffect;
+	private states: StateMap;
+	private reactions: Reaction[];
 
 	constructor(init: InitReactAdapter) {
 		super();
 		this.useState = init.useState;
-		this.useEffect = init.useEffect;
+		// this.useEffect = init.useEffect;
 		this.states = {};
+		this.reactions = [];
 	}
 
 	createState<T>(stateName: string, initialState: T) {
@@ -38,10 +45,17 @@ class ReactAdapter extends GenericAdapter implements Adapter {
 	updateState<T>(stateName: string, newState: UpdateStateFnParams<T>) {
 		const updateFn = this.states[stateName][1];
 		updateFn(newState);
+
+		this.reactions.forEach((reaction) => {
+			if (reaction.condition()) reaction.callback();
+		});
 	}
 
-	when(condition: boolean, cb: () => void) {
-		this.useEffect(cb, [condition]);
+	when(condition: boolean, callback: () => void) {
+		this.reactions.push({
+			condition: () => condition,
+			callback,
+		});
 	}
 }
 
