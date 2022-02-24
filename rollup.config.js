@@ -6,7 +6,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import pkg from './package.json';
 
 export default {
-	input: 'src/index.ts',
+	input: './src/index.ts',
 	output: {
 		dir: './dist',
 	},
@@ -17,7 +17,6 @@ export default {
 			rollupCommonJSResolveHack: true,
 			exclude: '**/__tests__/**',
 			clean: true,
-			useTsconfigDeclarationDir: true,
 		}),
 		commonjs({
 			include: ['node_modules/**'],
