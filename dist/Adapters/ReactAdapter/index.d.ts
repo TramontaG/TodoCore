@@ -5,7 +5,7 @@ export interface InitReactAdapter {
     useState: typeof React.useState;
     useEffect: typeof React.useEffect;
 }
-declare type UpdateStateFnParams<T> = (value: T) => T | T;
+declare type UpdateStateFnParams<T> = T | ((value: T) => T);
 declare type StateMap = {
     [key: string]: [any, (p: UpdateStateFnParams<any>) => void];
 };

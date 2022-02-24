@@ -1,3 +1,3 @@
-import ReactAdapter, { InitReactAdapter } from './dist/Adapters/ReactAdapter';
-export * from './dist/Counter';
+import ReactAdapter, { InitReactAdapter } from './Adapters/ReactAdapter';
+export * from './Counter';
 export declare const initReact: (initOptions: InitReactAdapter) => ReactAdapter;
