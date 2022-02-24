@@ -17,6 +17,7 @@ export default {
 			rollupCommonJSResolveHack: true,
 			exclude: '**/__tests__/**',
 			clean: true,
+			useTsconfigDeclarationDir: true,
 		}),
 		commonjs({
 			include: ['node_modules/**'],
