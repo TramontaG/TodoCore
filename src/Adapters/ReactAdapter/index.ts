@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import GenericAdapter from '../GenericAdapter';
 import Adapter from '../GenericAdapter';
 
@@ -7,8 +7,10 @@ export interface InitReactAdapter {
 	useEffect: typeof React.useEffect;
 }
 
+type UpdateStateFnParams<T> = (value: T) => T | T;
+
 type StateMap = {
-	[key: string]: [any, Dispatch<SetStateAction<any>>];
+	[key: string]: [any, (p: UpdateStateFnParams<any>) => void];
 };
 
 class ReactAdapter extends GenericAdapter implements Adapter {
@@ -33,7 +35,7 @@ class ReactAdapter extends GenericAdapter implements Adapter {
 		return this.states[stateName][0];
 	}
 
-	updateState<T>(stateName: string, newState: Dispatch<SetStateAction<T>>) {
+	updateState<T>(stateName: string, newState: UpdateStateFnParams<T>) {
 		const updateFn = this.states[stateName][1];
 		updateFn(newState);
 	}
